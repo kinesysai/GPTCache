@@ -2,7 +2,7 @@ import logging
 from gptcache import cache
 from gptcache.utils.error import NotInitError
 from gptcache.utils.time import time_cal
-
+from gptcache.utils.log import gptcache_log
 
 def adapt(llm_handler, cache_data_convert, update_cache_callback, *args, **kwargs):
     chat_cache = kwargs.pop("cache_obj", cache)
@@ -86,6 +86,7 @@ def adapt(llm_handler, cache_data_convert, update_cache_callback, *args, **kwarg
                 eval_cache_data,
                 extra_param=context.get("evaluation_func", None),
             )
+            gptcache_log.info(f"evaluation similarity, rank: {rank}, rank_threshold:{rank_threshold}")
             if rank_threshold <= rank:
                 cache_answers.append((rank, ret.answers[0].answer))
                 chat_cache.data_manager.hit_cache_callback(cache_data)

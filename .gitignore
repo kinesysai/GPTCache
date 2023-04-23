@@ -137,3 +137,6 @@ dmypy.json
 **/example.py
 **/example.db
 **/.chroma
+
+# Milvus data path
+volumes
