@@ -58,7 +58,7 @@ if __name__ == "__main__":
     embeddings = EmbeddingOnnx()
 
 
-    sql_url = 'postgresql://postgres:admin@localhost:5433/lust'
+    sql_url = 'postgresql://postgres:admin@localhost:5433/gptcache'
     scalar_store = CacheBase(name='postgresql', sql_url=sql_url)
     vector_base = VectorBase('milvus', host='localhost', port='19530', dimension=embeddings.dimension)
     data_manager = get_data_manager(scalar_store, vector_base)
