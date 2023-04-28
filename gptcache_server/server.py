@@ -1,6 +1,7 @@
 import argparse
 import http.server
 import json
+import os
 
 from gptcache import cache
 from gptcache.adapter.api import get, put
@@ -57,10 +58,18 @@ if __name__ == "__main__":
     # embeddings = EmbeddingOpenAI()
     embeddings = EmbeddingOnnx()
 
+    sql_url = os.getenv("POSTGRE_URI")
+    if sql_url is None:
+        raise EnvironmentError("POSTGRE_URI env not found")
+    
+    milvus_host = os.getenv("MILVUS_HOST")
+    milvus_port = os.getenv("MILVUS_PORT")
+    if milvus_host is None or milvus_port is None:
+        raise EnvironmentError("MILVUS_HOST or/and MILVUS_PORT env not found")
 
-    sql_url = 'postgresql://postgres:admin@localhost:5433/gptcache'
+    # sql_url = 'postgresql://postgres:admin@localhost:5433/gptcache'
     scalar_store = CacheBase(name='postgresql', sql_url=sql_url)
-    vector_base = VectorBase('milvus', host='localhost', port='19530', dimension=embeddings.dimension)
+    vector_base = VectorBase('milvus', host=milvus_host, port=milvus_port, dimension=embeddings.dimension)
     data_manager = get_data_manager(scalar_store, vector_base)
     cache.init(
         pre_embedding_func=get_prompt,
