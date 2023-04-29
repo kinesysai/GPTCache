@@ -140,3 +140,4 @@ dmypy.json
 
 # Milvus data path
 volumes
+prod.sh
