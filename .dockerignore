@@ -1,0 +1,10 @@
+.github
+docs
+examples
+docker
+scripts
+tests
+.gitignore
+codecov.yml
+dev.sh
+LICENSE
