@@ -6,7 +6,7 @@ services:
       context: ..
     container_name: gptcache
     environment:
-      - POSTGRE_URI
+      - 'POSTGRE_URI=${POSTGRE_URI}'
       - MILVUS_HOST=milvus
       - MILVUS_PORT=19530
     ports:
