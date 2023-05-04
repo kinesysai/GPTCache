@@ -10,6 +10,7 @@ from gptcache.manager import get_data_manager, CacheBase, VectorBase
 # from gptcache.embedding import OpenAI as EmbeddingOpenAI
 from gptcache.embedding import Onnx as EmbeddingOnnx
 from gptcache.utils.log import gptcache_log
+from gptcache.similarity_evaluation.onnx import OnnxModelEvaluation
 
 class GPTCacheHandler(http.server.BaseHTTPRequestHandler):
     # curl -X GET  "http://localhost:8000?prompt=hello"
@@ -74,7 +75,8 @@ if __name__ == "__main__":
     cache.init(
         pre_embedding_func=get_prompt,
         data_manager=data_manager,
-        embedding_func=embeddings.to_embeddings
+        embedding_func=embeddings.to_embeddings,
+        similarity_evaluation=OnnxModelEvaluation()
     )
 
     start_server(args.host, args.port)
